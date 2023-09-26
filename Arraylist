@@ -2,35 +2,33 @@ public class MyArrayList {
     private Object[] arrayStorage; // This is where our items are stored.
     private int numberOfItems; // This counts how many items we have added.
 
-    // Constructor - This runs when we create a new MyArrayList.
+    // Constructor
     public MyArrayList() {
         arrayStorage = new Object[10]; // We start with space for 10 items.
         numberOfItems = 0; // At the start, we have added 0 items.
     }
 
-    // Get the size of our storage (both empty and filled slots).
+    // STEP 2: Return PHYSICAL SIZE of the array
     public int getPhysicalSize() {
         return arrayStorage.length;
     }
 
-    // Get the number of items we have added.
+    // STEP 2: Return LOGICAL SIZE of the array
     public int getLogicalSize() {
         return numberOfItems;
     }
 
-    // Add an item to the end.
+    // STEP 3: Add an element to the END of the array
     public void addToEnd(Object item) {
         // If we're out of space, make more room.
         if (numberOfItems == arrayStorage.length) {
             makeMoreRoom();
         }
-
-        // Put the item in the next available spot and increase our item count.
         arrayStorage[numberOfItems] = item;
         numberOfItems++;
     }
 
-    // Make more room in our storage.
+    // STEP 5: Double the size of the array if it gets full
     private void makeMoreRoom() {
         Object[] biggerStorage = new Object[arrayStorage.length * 2];
         for (int i = 0; i < arrayStorage.length; i++) {
@@ -39,33 +37,29 @@ public class MyArrayList {
         arrayStorage = biggerStorage;
     }
 
-    // Add an item to the start.
+    // STEP 4: Add an Element to the Beginning of the array
     public void addToStart(Object item) {
         if (numberOfItems == arrayStorage.length) {
             makeMoreRoom();
         }
-
-        // Move all items over to make room at the start.
         for (int i = numberOfItems; i > 0; i--) {
             arrayStorage[i] = arrayStorage[i - 1];
         }
-
-        // Put the new item in the first spot and increase our item count.
         arrayStorage[0] = item;
         numberOfItems++;
     }
 
-    // Check if an item is in our list and return its position.
+    // STEP 6: Find a given element in the array and tell if it exists or not
     public int findItem(Object item) {
         for (int i = 0; i < numberOfItems; i++) {
             if (arrayStorage[i].equals(item)) {
-                return i; // Item found, return its position.
+                return i;
             }
         }
-        return -1; // Item not found.
+        return -1; // -1 indicates item not found
     }
 
-    // Get an item at a certain position.
+    // STEP 7: Return the object at a given INDEX
     public Object getItemAt(int position) {
         if (position >= 0 && position < numberOfItems) {
             return arrayStorage[position];
@@ -73,23 +67,20 @@ public class MyArrayList {
         return null; // If the position is invalid, return null.
     }
 
-    // Remove an item.
+    // STEP 8: Remove a specified array element and close any gaps
     public void removeItem(Object item) {
         int position = findItem(item);
         if (position == -1) {
             System.out.println("Item not found!");
             return;
         }
-
-        // Move all items after the removed one to fill the gap.
         for (int i = position; i < numberOfItems - 1; i++) {
             arrayStorage[i] = arrayStorage[i + 1];
         }
-
-        numberOfItems--; // Decrease our item count.
+        numberOfItems--;
     }
 
-    // Display all items.
+    // STEP 9: DISPLAY all of the elements in the array
     public void displayItems() {
         for (int i = 0; i < numberOfItems; i++) {
             System.out.print(arrayStorage[i] + " ");
